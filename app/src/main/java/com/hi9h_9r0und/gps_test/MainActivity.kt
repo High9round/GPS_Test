@@ -94,6 +94,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getMGRS(lon:Double, lat:Double):String
+    {
+        var result:String=""
+
+
+
+        return result
+    }
+
     private fun grantLocationPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= 23) {
 
