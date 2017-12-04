@@ -65,33 +65,32 @@ class MainActivity : AppCompatActivity() {
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
             Log.d("test", "onLocationChanged, location:" + location);
-            var longitude = location.getLongitude(); //경도
-            var latitude = location.getLatitude();   //위도
-            var altitude = location.getAltitude();   //고도
-            var accuracy = location.getAccuracy();    //정확도
-            var provider = location.getProvider();   //위치제공자
+            var longitude = location.longitude; //경도
+            var latitude = location.latitude;   //위도
+            var altitude = location.altitude;   //고도
+            var accuracy = location.accuracy;    //정확도
+            var provider = location.provider;   //위치제공자
             //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
             //Network 위치제공자에 의한 위치변화
             //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
-            textView_Result.setText("위치정보 : " + provider + "\n위도 : " + longitude + "\n경도 : " + latitude
-                    + "\n고도 : " + altitude + "\n정확도 : "  + accuracy)
+            textView_Result.text="위치정보 : " + provider.toString() + "\n위도 : " + longitude.toString() + "\n경도 : " + latitude.toString()  + "\n고도 : " + altitude.toString() + "\n정확도 : "  + accuracy.toString()
         }
 
         override fun onProviderDisabled(provider: String?) {
             // Disbled시
-            Log.d("test", "onProviderDisabled, provider:" + provider);
+            Log.d("test", "onProviderDisabled, provider:" + provider)
         }
 
 
 
         override fun onProviderEnabled(provider:String) {
             // Enabled시
-            Log.d("test", "onProviderEnabled, provider:" + provider);
+            Log.d("test", "onProviderEnabled, provider:" + provider)
         }
 
         override fun onStatusChanged(provider:String, status:Int, extras:Bundle) {
             // 변경시
-            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras)
         }
     }
 
@@ -118,6 +117,4 @@ class MainActivity : AppCompatActivity() {
             return true
         }
     }
-
-
 }
