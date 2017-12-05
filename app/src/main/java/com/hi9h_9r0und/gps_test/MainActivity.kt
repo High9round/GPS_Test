@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import com.berico.coords.Coordinates
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -23,10 +24,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        lm=getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if(grantLocationPermission())
         {
-            lm=getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
 
             textView_Result.text="위치정보 수신중..."
 
@@ -58,10 +60,8 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
 
         super.onPause()
-        if (lm != null)
-        {
-            lm.removeUpdates(mLocationListener)
-        }
+        lm.removeUpdates(mLocationListener)
+
     }
     private val mLocationListener = object:LocationListener {
         override fun onLocationChanged(location:Location) {
@@ -69,11 +69,11 @@ class MainActivity : AppCompatActivity() {
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
             Log.d("test", "onLocationChanged, location:" + location);
-            var longitude = location.longitude; //경도
-            var latitude = location.latitude;   //위도
-            var altitude = location.altitude;   //고도
-            var accuracy = location.accuracy;    //정확도
-            var provider = location.provider;   //위치제공자
+            var longitude = location.longitude //경도
+            var latitude = location.latitude   //위도
+            var altitude = location.altitude   //고도
+            var accuracy = location.accuracy    //정확도
+            var provider = location.provider   //위치제공자
             //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
             //Network 위치제공자에 의한 위치변화
             //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getMGRS(lon:Double, lat:Double):String
     {
-        var result:String=""
+        var result:String=Coordinates.mgrsFromLatLon(lat,lon)
 
         return result
     }
