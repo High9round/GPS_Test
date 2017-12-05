@@ -77,8 +77,12 @@ class MainActivity : AppCompatActivity() {
             //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
             //Network 위치제공자에 의한 위치변화
             //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
-            textView_Result.text="위치정보 : " + provider.toString() + "\n위도 : " + longitude.toString() + "\n경도 : " + latitude.toString()  + "\n고도 : " + altitude.toString() + "\n정확도 : "  + accuracy.toString()
-            textViewMgrs.text=getMGRS(longitude,latitude)
+
+            val result: String ="위치정보 : " + provider.toString() + "\n위도 : " + longitude.toString() + "\n경도 : " + latitude.toString()  + "\n고도 : " + altitude.toString() + "\n정확도 : "  + accuracy.toString()
+
+
+            textView_Result.text=result
+            textViewMgrs.text="MGRS:"+getMGRS(longitude,latitude)
         }
 
         override fun onProviderDisabled(provider: String?) {
