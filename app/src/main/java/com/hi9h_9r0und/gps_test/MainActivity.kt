@@ -17,20 +17,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var isGrantLocPermission: Boolean=false
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-
-        isGrantLocPermission=grantLocationPermission()
-
-        if(isGrantLocPermission)
+        if(grantLocationPermission())
         {
+
             var lm:LocationManager= getSystemService(Context.LOCATION_SERVICE) as LocationManager
             textView_Result.text="위치정보 수신중..."
 
@@ -74,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             //Network 위치제공자에 의한 위치변화
             //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
             textView_Result.text="위치정보 : " + provider.toString() + "\n위도 : " + longitude.toString() + "\n경도 : " + latitude.toString()  + "\n고도 : " + altitude.toString() + "\n정확도 : "  + accuracy.toString()
+            textViewMgrs.text=getMGRS(longitude,latitude)
         }
 
         override fun onProviderDisabled(provider: String?) {
@@ -98,8 +94,6 @@ class MainActivity : AppCompatActivity() {
     {
         var result:String=""
 
-
-
         return result
     }
 
@@ -109,11 +103,13 @@ class MainActivity : AppCompatActivity() {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             {
                 //Log.v(FragmentActivity.TAG, "Permission is granted")
+                Toast.makeText(this, "ACCESS_FINE_LOCATION is Granted", Toast.LENGTH_SHORT).show()
                 return true
             }
             else
             {
                 //Log.v(FragmentActivity.TAG, "Permission is revoked")
+                Toast.makeText(this, "ACCESS_FINE_LOCATION is Revoked", Toast.LENGTH_SHORT).show()
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
 
                 return false
@@ -121,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
         else
         {
-            Toast.makeText(this, "External Storage Permission is Grant", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "ACCESS_FINE_LOCATION is Grant", Toast.LENGTH_SHORT).show()
             //Log.d(FragmentActivity.TAG, "External Storage Permission is Grant ")
             return true
         }
