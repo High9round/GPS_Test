@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var lm:LocationManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         if(grantLocationPermission())
         {
+            lm=getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-            var lm:LocationManager= getSystemService(Context.LOCATION_SERVICE) as LocationManager
             textView_Result.text="위치정보 수신중..."
 
             try
@@ -54,6 +55,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+
+        super.onPause()
+        if (lm != null)
+        {
+            lm.removeUpdates(mLocationListener)
+        }
+    }
     private val mLocationListener = object:LocationListener {
         override fun onLocationChanged(location:Location) {
             //여기서 위치값이 갱신되면 이벤트가 발생한다.
